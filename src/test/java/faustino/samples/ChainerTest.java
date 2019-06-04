@@ -1,10 +1,11 @@
 package faustino.samples;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.function.BiConsumer;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class ChainerTest {
@@ -13,7 +14,7 @@ public class ChainerTest {
     public void shouldCreateChainer() {
         BiConsumer executor = Mockito.mock(BiConsumer.class);
         Chainer chainer = Chainer.create().using(executor);
-        Assert.assertNotNull(chainer);
+        assertThat(chainer).isNotNull();
     }
 
     @Test
@@ -21,7 +22,7 @@ public class ChainerTest {
         Runnable toRegister = Mockito.mock(Runnable.class);
         Chainer chainer = Chainer.create()
                 .with("my description", toRegister);
-        Assert.assertNotNull(chainer);
+        assertThat(chainer).isNotNull();
     }
 
     @Test
