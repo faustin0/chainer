@@ -14,15 +14,19 @@ public class Chainer {
 
     private Chainer(List<Runnable> commands) {
         this.commands = commands;
+        this.executor = this::defaultExecutor;
     }
 
-    public static Chainer of(Chainer c1, Chainer c2) {
+    public Chainer concat(Chainer c1, Chainer c2) {
+        c1.executor = this.executor;
+        c2.executor = this.executor;
         List<Runnable> commands = Stream.of(
                 c1.commands,
                 c2.commands
         ).flatMap(Collection::stream).collect(Collectors.toList());
 
-        return new Chainer(commands);
+        this.commands = commands;
+        return this;
     }
 
     public static Chainer create() {
@@ -42,5 +46,9 @@ public class Chainer {
     public Chainer using(BiConsumer<String, Runnable> executor) {
         this.executor = executor;
         return this;
+    }
+
+    private void defaultExecutor(String s, Runnable r) {
+        r.run();
     }
 }

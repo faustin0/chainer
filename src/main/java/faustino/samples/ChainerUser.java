@@ -6,12 +6,6 @@ public class ChainerUser {
 
     }
 
-    public Chainer getCompleteChain() {
-        return Chainer.of(
-                getFirstPartialChain(),
-                getSecondPartialChain()
-        );
-    }
 
     public Chainer getFirstPartialChain() {
         return Chainer.create()

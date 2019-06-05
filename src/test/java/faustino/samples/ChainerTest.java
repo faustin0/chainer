@@ -1,13 +1,15 @@
 package faustino.samples;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.function.BiConsumer;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+@ExtendWith(MockitoExtension.class)
 public class ChainerTest {
 
     @Test
@@ -20,7 +22,8 @@ public class ChainerTest {
     @Test
     public void shouldRegister_oneCommandWithDescription() {
         Runnable toRegister = Mockito.mock(Runnable.class);
-        Chainer chainer = Chainer.create()
+        Chainer chainer = Chainer
+                .create()
                 .with("my description", toRegister);
         assertThat(chainer).isNotNull();
     }
@@ -31,7 +34,7 @@ public class ChainerTest {
 
         Chainer.create()
                 .using(new ExecutorImpl())
-                .with("Templates", toExecute)
+                .with("toExecute1", toExecute)
                 .execute();
 
         Mockito.verify(toExecute).run();
